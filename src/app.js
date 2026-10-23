@@ -11,6 +11,8 @@ import { productsRouter } from './modules/products/products.routes.js';
 import inventoryRouter from './modules/inventory/inventory.routes.js';
 import salesRouter from './modules/sales/sales.routes.js';
 import reportsRouter from './modules/reports/reports.routes.js';
+import organizationsRouter from './modules/organizations/organizations.routes.js';
+import dashboardRouter from './modules/dashboard/dashboard.routes.js';
 
 export const app = express();
 
@@ -37,6 +39,8 @@ app.use('/api/products', productsRouter);
 app.use('/api/inventory', inventoryRouter);
 app.use('/api/sales', salesRouter);
 app.use('/api/reports', reportsRouter);
+app.use('/api/organizations', organizationsRouter);
+app.use('/api/dashboard', dashboardRouter);
 
 // 404 Handler for undefined routes
 app.use(notFoundHandler);
