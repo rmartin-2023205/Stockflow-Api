@@ -6,6 +6,8 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFound.js';
 import { healthRouter } from './modules/health/health.routes.js';
 import { authRouter } from './modules/auth/auth.routes.js';
+import { categoriesRouter } from './modules/categories/categories.routes.js';
+import { productsRouter } from './modules/products/products.routes.js';
 
 export const app = express();
 
@@ -27,6 +29,8 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 // Mount API routes under /api
 app.use('/api', healthRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/categories', categoriesRouter);
+app.use('/api/products', productsRouter);
 
 // 404 Handler for undefined routes
 app.use(notFoundHandler);
