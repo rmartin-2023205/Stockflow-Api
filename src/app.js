@@ -17,8 +17,22 @@ import dashboardRouter from './modules/dashboard/dashboard.routes.js';
 export const app = express();
 
 // Security and CORS configuration
+const allowedOrigins = env.CLIENT_URL
+  ? env.CLIENT_URL.split(',').map((url) => url.trim().replace(/\/$/, ''))
+  : ['http://localhost:5173'];
+
 app.use(cors({
-  origin: env.CLIENT_URL,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    const normalized = origin.replace(/\/$/, '');
+    if (allowedOrigins.includes(normalized) || allowedOrigins.includes('*')) {
+      return callback(null, true);
+    }
+    if (env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS no permitido para el origen: ${origin}`));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-organization-id'],
